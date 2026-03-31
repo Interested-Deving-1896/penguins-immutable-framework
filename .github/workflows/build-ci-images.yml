@@ -2,11 +2,13 @@ name: Build CI images
 
 on:
   push:
+    if: github.repository == 'Interested-Deving-1896/penguins-immutable-framework'
     branches: ["main"]
     paths:
       - ".github/images/**"
   # Allow manual rebuild when base images update.
   workflow_dispatch:
+    if: github.repository == 'Interested-Deving-1896/penguins-immutable-framework'
 
 jobs:
   opensuse-tumbleweed-ci:
@@ -45,6 +47,7 @@ jobs:
             org.opencontainers.image.description=openSUSE Tumbleweed with tar+git+sh for GitHub Actions
 
   voidlinux-ci:
+    if: github.repository == 'Interested-Deving-1896/penguins-immutable-framework'
     name: voidlinux-ci
     runs-on: ubuntu-latest
     continue-on-error: true
