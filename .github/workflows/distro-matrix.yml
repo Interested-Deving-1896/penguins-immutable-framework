@@ -17,6 +17,7 @@ jobs:
   # runs. This avoids the chicken-and-egg problem where images must exist
   # before the workflow that creates them has ever run on main.
   build-ci-images:
+    if: github.repository == 'Interested-Deving-1896/penguins-immutable-framework'
     name: "Build CI image: ${{ matrix.image }}"
     runs-on: ubuntu-latest
     permissions:
