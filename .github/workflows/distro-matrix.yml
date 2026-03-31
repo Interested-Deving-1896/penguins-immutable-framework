@@ -16,47 +16,6 @@ jobs:
   # Build all distro CI images and push to GHCR before the smoke-test matrix
   # runs. This avoids the chicken-and-egg problem where images must exist
   # before the workflow that creates them has ever run on main.
-  build-ci-images:
-    if: github.repository == 'Interested-Deving-1896/penguins-immutable-framework'
-    name: "Build CI image: ${{ matrix.image }}"
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - image: opensuse-tumbleweed-ci
-            context: .github/images/opensuse-tumbleweed-ci
-          - image: voidlinux-ci
-            context: .github/images/voidlinux-ci
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set lowercase owner
-        run: echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: ${{ matrix.context }}
-          push: true
-          tags: |
-            ghcr.io/interested-deving-1896/${{ matrix.image }}:latest
-            ghcr.io/interested-deving-1896/${{ matrix.image }}:${{ github.sha }}
-          build-args: |
-            VOIDLINUX_REPO=https://repo-de.voidlinux.org/current
-          labels: |
-            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
-
   smoke-test:
     name: "${{ matrix.distro }} / ${{ matrix.backend }}"
     runs-on: ubuntu-latest
