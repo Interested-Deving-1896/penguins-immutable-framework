@@ -8,6 +8,10 @@ on:
   # Allow manual trigger for full matrix runs.
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   # Build the openSUSE CI image and push it to GHCR so the smoke-test matrix
   # job can pull it. Running this as a prerequisite job avoids the
@@ -19,7 +23,6 @@ jobs:
   smoke-test:
     name: "${{ matrix.distro }} / ${{ matrix.backend }}"
     runs-on: ubuntu-latest
-
 
     strategy:
       fail-fast: false
@@ -131,6 +134,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Go
         uses: actions/setup-go@v5
