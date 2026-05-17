@@ -6,21 +6,13 @@ run:
 linters:
   enable:
     - errcheck
-    - gosimple
     - govet
     - ineffassign
     - staticcheck
     - unused
-    - gofmt
-    - goimports
     - misspell
     - unconvert
     - unparam
-  settings:
-    goimports:
-      local-prefixes: github.com/penguins-immutable-framework
-
-issues:
   exclusions:
     rules:
       # adapter.go files shell out to external binaries; unused function warnings
@@ -34,3 +26,12 @@ issues:
       # local and CI can produce false positives on comment formatting.
       - path: "core/hooks/hooks.go"
         linters: [gofmt, goimports]
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/penguins-immutable-framework
