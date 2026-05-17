@@ -1,125 +1,75 @@
-# penguins-immutable-framework (PIF)
+[update-readmes]   Mode: rewrite — migrating to template structure...
+# penguins-immutable-framework
 
-A distro-agnostic, architecture-agnostic framework for building immutable Linux
-distributions.
+[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-immutable-framework)
 
-Forked from [immutable-linux-framework](https://gitlab.com/openos-project/immutable-filesystem_deving/immutable-linux-framework)
-and rebranded as part of the **penguins ecosystem** alongside
-[penguins-eggs](https://gitlab.com/openos-project/penguins-eggs_deving/penguins-eggs) and
-[penguins-recovery](https://gitlab.com/openos-project/penguins-eggs_deving/penguins-recovery).
+<!-- AI:start:what-it-does -->
+_Description pending._
+<!-- AI:end:what-it-does -->
 
-Distro builders choose one or more immutability backends at build time; the
-framework provides a unified HAL and CLI surface on top.
+## Architecture
 
----
+<!-- AI:start:architecture -->
+_Architecture documentation pending._
+<!-- AI:end:architecture -->
 
-## penguins-eggs & penguins-recovery integration
+## Install
 
-penguins-immutable-framework has **bidirectional** integration with the penguins
-ecosystem.
-
-### penguins-immutable-framework → penguins-eggs / penguins-recovery
-
-| Event | Action |
-|---|---|
-| `pif upgrade` (pre) | Calls `penguins-recovery snapshot create pre-pif-upgrade` before the atomic update |
-| `pif upgrade` (post) | Notifies penguins-eggs via `eggs pif-upgraded` hook so the next ISO reflects the new root |
-| `pif mutable enter` | Warns eggs that the system is temporarily mutable (ISO builds should be deferred) |
-| `pif mutable exit` | Triggers `eggs produce --update-root` (if configured) to snapshot the new immutable state |
-| `pif rollback` | Calls `penguins-recovery snapshot create pre-pif-rollback` before reverting |
-
-Configure in `pif.toml`:
-
-```toml
-[hooks]
-eggs_bin     = "/usr/bin/eggs"           # set to "" to disable
-recovery_bin = "/usr/bin/penguins-recovery"
-
-pre_upgrade_snapshot  = true   # recovery snapshot before upgrade
-post_upgrade_notify   = true   # notify eggs after upgrade
-mutable_warn_eggs     = true   # warn eggs on mutable enter
-post_mutable_produce  = false  # set true to auto-produce ISO after mutable exit
-pre_rollback_snapshot = true   # recovery snapshot before rollback
-```
-
-### penguins-eggs / penguins-recovery → penguins-immutable-framework
-
-PIF registers itself as a plugin for both tools:
-
-**eggs plugin** (`integration/eggs-plugin/pif-hook.sh`):
-- Called by `eggs produce` to embed the PIF config and backend state into the ISO
-- Called by `eggs update` to check whether the system is in mutable mode before updating
-
-**recovery plugin** (`integration/recovery-plugin/pif-plugin.sh`):
-- `pw_plugin_pre_reset()` — exits mutable mode if active before a factory reset
-- `pw_plugin_post_reset()` — re-initialises the PIF backend after a hard reset
-
----
-
-## Integrated Backends
-
-| Backend | Mechanism | Best For |
-|---|---|---|
-| `abroot` | A/B partition swap + OCI images | Appliance/desktop, atomic OCI-based updates |
-| `ashos` | BTRFS snapshot tree | Multi-distro, hierarchical snapshot management |
-| `frzr` | Read-only BTRFS subvolume deploy | Gaming/appliance, image-based deployment |
-| `akshara` | YAML-declared system rebuild | Declarative, container-native distros |
-| `btrfs-dwarfs` | BTRFS+DwarFS hybrid blend layer | Storage-constrained, high-compression roots |
-
----
-
-## Quick Start
+<!-- Add installation instructions here. This section is yours — the AI will not modify it. -->
 
 ```bash
-# Install PIF
-curl -fsSL https://pif.example.org/install.sh | sh
-
-# Initialise with the abroot backend
-pif init --distro ubuntu --backend abroot --arch x86_64
-
-# Upgrade (backend-transparent)
-pif upgrade
-
-# Roll back
-pif rollback
-
-# Toggle mutability for a one-off change
-pif mutable enter
-# ... make changes ...
-pif mutable exit
+git clone https://github.com/Interested-Deving-1896/penguins-immutable-framework.git
+cd penguins-immutable-framework
 ```
 
----
+## Usage
 
-## Configuration (`pif.toml`)
+<!-- Add usage examples here. This section is yours — the AI will not modify it. -->
 
-```toml
-[pif]
-distro  = "arch"
-arch    = "x86_64"
-backend = "ashos"
+## Configuration
 
-[backend.ashos]
-snapshot_root  = "/@"
-deploy_on_boot = true
+<!-- Document configuration options here. This section is yours — the AI will not modify it. -->
 
-[hooks]
-eggs_bin              = "/usr/bin/eggs"
-recovery_bin          = "/usr/bin/penguins-recovery"
-pre_upgrade_snapshot  = true
-post_upgrade_notify   = true
-mutable_warn_eggs     = true
-post_mutable_produce  = false
-pre_rollback_snapshot = true
+## CI
+
+<!-- AI:start:ci -->
+_CI documentation pending._
+<!-- AI:end:ci -->
+
+## Mirror chain
+
+<!-- AI:start:mirror-chain -->
+This repo is maintained in [`Interested-Deving-1896/penguins-immutable-framework`](https://github.com/Interested-Deving-1896/penguins-immutable-framework) and mirrored through:
+
+```
+Interested-Deving-1896/penguins-immutable-framework  ──►  OpenOS-Project-OSP/penguins-immutable-framework  ──►  OpenOS-Project-Ecosystem-OOC/penguins-immutable-framework
 ```
 
----
+Changes flow downstream automatically via the hourly mirror chain in
+[`fork-sync-all`](https://github.com/Interested-Deving-1896/fork-sync-all).
+Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-Deving-1896`.
+<!-- AI:end:mirror-chain -->
+
+## Contributors
+
+<!-- AI:start:contributors -->
+_Contributors pending._
+<!-- AI:end:contributors -->
+
+## Origins
+
+<!-- AI:start:origins -->
+_No dependency graph found. Run `generate-dep-graph.yml` to generate `dep-graph/origins.md`._
+<!-- AI:end:origins -->
+
+## Resources
+
+<!-- AI:start:resources -->
+_No additional resource files found._
+<!-- AI:end:resources -->
 
 ## License
 
-Each integrated backend retains its original license. PIF framework code
-(`core/`, `tools/`, `scripts/`) is licensed under **GPL-3.0**.
-
-## Upstream
-
-Forked from [openos-project/immutable-linux-framework](https://gitlab.com/openos-project/immutable-filesystem_deving/immutable-linux-framework).
+<!-- AI:start:license -->
+<!-- License not detected — add a LICENSE file to this repo. -->
+<!-- AI:end:license -->
