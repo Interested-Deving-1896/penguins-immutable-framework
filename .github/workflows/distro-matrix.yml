@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write  # Added permission for Docker build
     strategy:
       fail-fast: false
       matrix:
