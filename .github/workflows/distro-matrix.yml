@@ -20,7 +20,7 @@ jobs:
     name: "Build CI image: ${{ matrix.image }}"
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write  # Changed to write to allow pushing images
       packages: write
       packages: read  # Added permission for pulling images from GHCR
       id-token: write  # Added permission for Docker image push
