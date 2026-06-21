@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Changed to write to allow pushing images
-      packages: write
+      packages: write   # Ensure packages permission is set to write
       id-token: write  # Added permission for Docker image push
     strategy:
       fail-fast: false
