@@ -9,20 +9,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Build the openSUSE CI image and push it to GHCR so the smoke-test matrix
-  # job can pull it. Running this as a prerequisite job avoids the
-  # chicken-and-egg problem where the image must exist before the workflow
-  # that creates it has ever run on main.
-  # Build all distro CI images and push to GHCR before the smoke-test matrix
-  # runs. This avoids the chicken-and-egg problem where images must exist
-  # before the workflow that creates them has ever run on main.
   build-ci-images:
     name: "Build CI image: ${{ matrix.image }}"
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Changed to write to allow pushing images
       packages: write
-      packages: read  # Added permission for pulling images from GHCR
       id-token: write  # Added permission for Docker image push
     strategy:
       fail-fast: false
@@ -65,7 +57,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # ── Arch family ────────────────────────────────────────────────────
           - distro: arch
             image: archlinux:latest
             backend: ashos
@@ -84,7 +75,6 @@ jobs:
             pkg_install: "pacman -Sy --noconfirm"
             ca_install: "pacman -Sy --noconfirm ca-certificates"
 
-          # ── Debian family ──────────────────────────────────────────────────
           - distro: debian
             image: debian:bookworm-slim
             backend: ashos
@@ -103,7 +93,6 @@ jobs:
             pkg_install: "apt-get update -qq && apt-get install -y -qq"
             ca_install: "apt-get update -qq && apt-get install -y -qq ca-certificates"
 
-          # ── Fedora family ──────────────────────────────────────────────────
           - distro: fedora
             image: fedora:latest
             backend: ashos
@@ -116,8 +105,6 @@ jobs:
             pkg_install: "dnf install -y -q"
             ca_install: "dnf install -y -q ca-certificates"
 
-          # ── Alpine ─────────────────────────────────────────────────────────
-          # Alpine uses /bin/sh (busybox); bash is not pre-installed.
           - distro: alpine
             image: alpine:latest
             backend: ashos
@@ -130,7 +117,6 @@ jobs:
             pkg_install: "apk add --no-cache"
             ca_install: "apk add --no-cache ca-certificates"
 
-          # ── Rocky Linux ───────────────────────────────────────────────────
           - distro: rocky
             image: rockylinux:9
             backend: ashos
@@ -143,21 +129,12 @@ jobs:
             pkg_install: "dnf install -y -q"
             ca_install: "dnf install -y -q ca-certificates"
 
-          # ── Void Linux ────────────────────────────────────────────────────
-          # Uses a pre-bootstrapped GHCR image built by build-ci-images.yml.
-          # That image layers tar, git, gzip, ca-certificates, and a
-          # /bin/sh -> /bin/bash symlink onto voidlinux/voidlinux:latest so
-          # the Actions runner can launch steps normally.
           - distro: void
             image: ghcr.io/interested-deving-1896/voidlinux-ci:latest
             backend: ashos
             pkg_install: "xbps-install -Sy"
             ca_install: "true"
 
-          # ── openSUSE Tumbleweed ────────────────────────────────────────────
-          # Uses a pre-bootstrapped GHCR image built by the build-ci-images
-          # job above. That image layers tar, git, gzip, ca-certificates, and
-          # a /bin/sh -> /bin/bash symlink onto opensuse/tumbleweed:latest.
           - distro: opensuse
             image: ghcr.io/interested-deving-1896/opensuse-tumbleweed-ci:latest
             backend: ashos
