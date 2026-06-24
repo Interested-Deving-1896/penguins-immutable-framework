@@ -4,13 +4,44 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-immutable-framework)
 
 <!-- AI:start:what-it-does -->
-_Description pending._
+This project provides an immutable framework for managing and deploying Linux-based systems within the Penguins ecosystem. It is a fork of the Interested-Deving-1896 project, rebranded and extended to support integration with Penguins-specific tools like Eggs and Powerwash. It is used by system administrators and developers to configure, build, and maintain consistent, immutable system environments. The framework includes tools for configuration management, systemd integration, and plugin-based extensibility.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-_Architecture documentation pending._
+The Penguins Immutable Framework is organized into modular components to support its functionality. The primary components include:
+
+1. **Core**: Contains the main logic and utilities for the framework.
+2. **Backends**: Implements backend-specific integrations and configurations.
+3. **Tools**: Includes the `pif` binary source code and related utilities.
+4. **Distros**: Houses distribution-specific configuration files in TOML format.
+5. **Systemd**: Provides systemd service and timer unit files for managing updates.
+6. **Integration**: Contains scripts and plugins for integration with external tools.
+7. **Docs**: Documentation files for usage and development.
+
+The components interact through configuration files (e.g., `pif.toml`) and plugins, enabling extensibility and customization. The `Makefile` defines build, installation, and integration workflows.
+
+Directory structure:
+```plaintext
+.
+├── backends/
+├── core/
+├── distros/
+├── docs/
+├── integration/
+├── man/
+├── scripts/
+├── systemd/
+├── tests/
+├── tools/
+├── .github/
+├── Makefile
+├── README.md
+├── go.mod
+├── go.sum
+├── pif.toml.sample
+```
 <!-- AI:end:architecture -->
 
 ## Install
