@@ -64,7 +64,10 @@ cd penguins-immutable-framework
 ## CI
 
 <!-- AI:start:ci -->
-_CI documentation pending._
+- **build-ci-images.yml**: Builds and pushes container images for CI environments. Requires `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets for Docker Hub authentication.  
+- **distro-matrix.yml**: Runs tests across multiple Linux distributions using a matrix strategy. No secrets required.  
+- **mirror-osp-to-ooc.yaml**: Syncs changes from the upstream repository to the forked repository. Requires `GITHUB_TOKEN` for authentication.  
+- **rebase-prs.yml**: Automatically rebases open pull requests against the default branch. Requires `GITHUB_TOKEN`.  
 <!-- AI:end:ci -->
 
 ## Mirror chain
