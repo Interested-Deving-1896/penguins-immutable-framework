@@ -1,7 +1,8 @@
 [update-readmes]   Mode: rewrite — migrating to template structure...
 # penguins-immutable-framework
 
-[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-immutable-framework)
+[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-immutable-framework) [![KDE Eco](https://img.shields.io/badge/KDE%20Eco-certified-brightgreen?logo=kde&logoColor=white&style=flat-square)](https://eco.kde.org/) [![Blue Angel](https://img.shields.io/badge/Blue%20Angel-DE--UZ%20215-0055a4?style=flat-square)](https://www.blauer-engel.de/en/certification/criteria) [![Energy](https://api.green-coding.io/v1/ci/badge/get?repo=Interested-Deving-1896%2Fpenguins-immutable-framework&branch=main&workflow=eco-audit.yml)](https://metrics.green-coding.io/ci-index.html)
+
 
 <!-- AI:start:what-it-does -->
 This project provides an immutable framework for managing and deploying Linux-based systems within the Penguins ecosystem. It is a fork of the Interested-Deving-1896 project, rebranded and extended to support integration with Penguins-specific tools like Eggs and Powerwash. It is used by system administrators and developers to configure, build, and maintain consistent, immutable system environments. The framework includes tools for configuration management, systemd integration, and plugin-based extensibility.
@@ -64,10 +65,10 @@ cd penguins-immutable-framework
 ## CI
 
 <!-- AI:start:ci -->
-- **build-ci-images.yml**: Builds and pushes container images for CI environments. Requires `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets for Docker Hub authentication.  
-- **distro-matrix.yml**: Runs tests across multiple Linux distributions using a matrix strategy. No secrets required.  
-- **mirror-osp-to-ooc.yaml**: Syncs changes from the upstream repository to the forked repository. Requires `GITHUB_TOKEN` for authentication.  
-- **rebase-prs.yml**: Automatically rebases open pull requests against the default branch. Requires `GITHUB_TOKEN`.  
+- **build-ci-images.yml**: Builds and pushes container images for CI environments. Requires `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets for Docker Hub authentication.
+- **distro-matrix.yml**: Runs tests across multiple Linux distributions using a matrix strategy. No secrets required.
+- **mirror-osp-to-ooc.yaml**: Syncs changes from the upstream repository to the forked repository. Requires `GITHUB_TOKEN` for authentication.
+- **rebase-prs.yml**: Automatically rebases open pull requests against the default branch. Requires `GITHUB_TOKEN`.
 <!-- AI:end:ci -->
 
 ## Mirror chain
@@ -109,6 +110,20 @@ Forked and rebranded from the penguins ecosystem immutability work.
 |---|---|
 | [dep-graph/origins.md](https://github.com/Interested-Deving-1896/penguins-immutable-framework/blob/main/dep-graph/origins.md) | Dependency graph (Markdown table) |
 <!-- AI:end:resources -->
+
+<!-- AI:start:accessibility -->
+This repo uses automated accessibility auditing via `check-accessibility.yml`.
+
+Checks include: CODEOWNERS ownership coverage, README screen-reader compatibility,
+WCAG 2.1 AA HTML compliance, audio overview (espeak-ng), and Braille output (liblouis).
+
+
+
+
+Run the [Check Accessibility](https://github.com/Interested-Deving-1896/penguins-immutable-framework/actions/workflows/check-accessibility.yml)
+workflow to generate the first report and accessibility artifacts.
+See [DOCS/accessibility.md](https://github.com/Interested-Deving-1896/penguins-immutable-framework/blob/main/DOCS/accessibility.md) for the full reference.
+<!-- AI:end:accessibility -->
 
 ## License
 
