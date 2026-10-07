@@ -112,6 +112,8 @@ Forked and rebranded from the penguins ecosystem immutability work.
 | [dep-graph/origins.md](https://github.com/Interested-Deving-1896/penguins-immutable-framework/blob/main/dep-graph/origins.md) | Dependency graph (Markdown table) |
 <!-- AI:end:resources -->
 
+## Accessibility
+
 <!-- AI:start:accessibility -->
 This repo uses automated accessibility auditing via `check-accessibility.yml`.
 
